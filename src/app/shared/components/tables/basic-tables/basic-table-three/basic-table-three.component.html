@@ -30,7 +30,7 @@
         </thead>
         <tbody class="divide-y divide-gray-100 dark:divide-white/[0.05]">
           @for (item of currentItems; track $index) {
-          <tr>
+          <tr (click)="goToSurvey(item._id)" class="cursor-pointer">
             <td class="px-4 py-4">
               <div class="flex items-center gap-3">
                   <span class="block font-medium text-gray-700 text-theme-sm dark:text-gray-400">

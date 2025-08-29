@@ -4,6 +4,7 @@ import { ButtonComponent } from '../../../ui/button/button.component';
 import { TableDropdownComponent } from '../../../common/table-dropdown/table-dropdown.component';
 import { BadgeComponent } from '../../../ui/badge/badge.component';
 import { ApiService } from '../../../../service/api-service/api.service';
+import { Router } from '@angular/router';
 
 interface Transaction {
   image: string;
@@ -32,7 +33,7 @@ export class BasicTableThreeComponent {
   itemsPerPage = 5;
   pages: number = 0
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService, private router: Router) { }
   ngOnInit() {
     this.fetchData()
   }
@@ -60,6 +61,10 @@ export class BasicTableThreeComponent {
       this.currentPage = page;
       this.fetchData();
     }
+  }
+
+  goToSurvey(survey_id: string) {
+    this.router.navigate(['/profile'], { queryParams: { survey_id: survey_id ? survey_id : '' } });
   }
 
   handleViewMore(item: Transaction) {
