@@ -5,6 +5,7 @@ import { TableDropdownComponent } from '../../../common/table-dropdown/table-dro
 import { BadgeComponent } from '../../../ui/badge/badge.component';
 import { ApiService } from '../../../../service/api-service/api.service';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 interface Transaction {
   image: string;
@@ -21,6 +22,7 @@ interface Transaction {
     CommonModule,
     ButtonComponent,
     BadgeComponent,
+    FormsModule
   ],
   templateUrl: './basic-table-three.component.html',
   styles: ``
@@ -32,7 +34,9 @@ export class BasicTableThreeComponent {
   currentPage = 1;
   itemsPerPage = 10;
   pages: number = 0
-  loading: boolean=false;
+  loading: boolean = false;
+  search: string = '';
+  filteredsurveys: any[] = [];
 
   constructor(private apiService: ApiService, private router: Router) { }
   ngOnInit() {
@@ -46,6 +50,7 @@ export class BasicTableThreeComponent {
       this.surveys = data.surveys;
       this.totalSurveys = data.total;
       this.pages = data.pages
+      this.filteredsurveys = data.surveys
       console.log(data, "this surveys", this.totalSurveys);
     })
   }
@@ -84,5 +89,25 @@ export class BasicTableThreeComponent {
     if (status === 'Success') return 'success';
     if (status === 'Pending') return 'warning';
     return 'error';
+  }
+  searchButton() {
+    this.loading = true;
+    if (this.search === '') {
+      this.loading = false;
+      this.fetchData()
+    } else {
+      this.loading = false;
+    }
+    this.filteredsurveys = this.surveys.filter((survey: any) => survey.title.toLowerCase().includes(this.search.toLowerCase()));
+    console.log(this.filteredsurveys, "this filteredsurveys");
+    console.log(this.search, "this search");
+  }
+  getFilteredSurveys(): any {
+    return this.filteredsurveys;
+  }
+
+  searchis(){
+    console.log(this.search,"daw");
+    this.filteredsurveys = this.surveys.filter((survey: any) => survey.title.toLowerCase().includes(this.search.toLowerCase()));
   }
 }

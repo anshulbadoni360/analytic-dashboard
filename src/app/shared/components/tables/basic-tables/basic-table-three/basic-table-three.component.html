@@ -1,9 +1,11 @@
 <div class="rounded-2xl border border-gray-200 bg-white pt-4 dark:border-white/[0.05] dark:bg-white/[0.03]">
   <div class="flex flex-col gap-2 px-5 mb-4 sm:flex-row sm:items-center sm:justify-between sm:px-6">
     <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-      <!-- <form>
+      <form>
         <div class="relative">
-          <button class="absolute -translate-y-1/2 left-4 top-1/2" type="button">
+          <input type="text" name="search" (keyup)="searchis()" [(ngModel)]="search" placeholder="Search..."
+            class="dark:bg-dark-900 h-[42px] w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pl-[42px] pr-4 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800 xl:w-[300px]" />
+          <button (click)="searchButton()" class="absolute -translate-y-1/2 right-4 top-1/2" type="button">
             <svg class="fill-gray-500 dark:fill-gray-400" width="20" height="20" viewBox="0 0 20 20" fill="none"
               xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd" clip-rule="evenodd"
@@ -11,16 +13,14 @@
                 fill=""></path>
             </svg>
           </button>
-          <input type="text" placeholder="Search..."
-            class="dark:bg-dark-900 h-[42px] w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pl-[42px] pr-4 text-sm text-gray-800 shadow-theme-xs placeholder:text-gray-400 focus:border-brand-300 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 dark:focus:border-brand-800 xl:w-[300px]" />
         </div>
-      </form> -->
+      </form>
     </div>
   </div>
 
-   <div *ngIf="loading" class="flex max-h-72 justify-center items-center h-screen">
-        <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-blue-500 border-gray-300"></div>
-      </div>
+  <div *ngIf="loading" class="flex max-h-72 justify-center items-center h-screen">
+    <div class="animate-spin rounded-full h-12 w-12 border-4 border-t-blue-500 border-gray-300"></div>
+  </div>
 
   <div *ngIf="!loading" class="overflow-hidden">
     <div class="max-w-full px-5 overflow-x-auto sm:px-6">
@@ -35,7 +35,7 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-100 dark:divide-white/[0.05]">
-          @for (item of currentItems; track $index) {
+          @for (item of getFilteredSurveys(); track $index) {
           <tr (click)="goToSurvey(item._id)" class="cursor-pointer">
             <td class="px-4 py-4">
               <div class="flex items-center gap-3">
@@ -108,8 +108,8 @@
             fill=""></path>
         </svg>
       </app-button>
-     
+
     </div>
   </div>
-  
+
 </div>

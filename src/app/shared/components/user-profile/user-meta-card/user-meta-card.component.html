@@ -144,7 +144,7 @@
   >
     <div class="px-2 pr-14">
       <h4 class="mb-2 text-2xl font-semibold text-gray-800 dark:text-white/90">
-        {{survey.media.media_filename || 'Upload Video'}}
+        {{survey.media.media_filename.length > 20 ? survey.media.media_filename.slice(0, 20) + '...' : survey.media.media_filename || 'Upload Video'}}
       </h4>
       <p class="mb-6 text-sm text-gray-500 dark:text-gray-400 lg:mb-7">
         Uploaded : {{survey.media.media_upload_timestamp.$date.slice(0, 10)}}
@@ -155,16 +155,16 @@
     <div class="flex justify-center mb-6">
       <video
         class="rounded-xl shadow-lg max-h-[350px] w-full object-cover"
-        autoplay
+        controls
         [src]="survey?.media.media_url || 'assets/sample-video.mp4'"
       >
         Your browser does not support the video tag.
       </video>
     </div>
-    <div class="flex items-center gap-3 px-2 mt-6 lg:justify-end">
+    <!-- <div class="flex items-center gap-3 px-2 mt-6 lg:justify-end">
       <app-button size="sm" (btnClick)="handleSave()">
         Close
       </app-button>
-    </div>
+    </div> -->
   </div>
 </app-modal>
