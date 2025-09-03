@@ -6,6 +6,7 @@ import { StatisticsChartComponent } from '../../../shared/components/ecommerce/s
 import { DemographicCardComponent } from '../../../shared/components/ecommerce/demographic-card/demographic-card.component';
 import { RecentOrdersComponent } from '../../../shared/components/ecommerce/recent-orders/recent-orders.component';
 import { ApiService } from '../../../shared/service/api-service/api.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-ecommerce',
@@ -16,6 +17,7 @@ import { ApiService } from '../../../shared/service/api-service/api.service';
     StatisticsChartComponent,
     DemographicCardComponent,
     RecentOrdersComponent,
+    CommonModule
   ],
   templateUrl: './ecommerce.component.html',
 })
@@ -23,12 +25,15 @@ export class EcommerceComponent implements OnInit {
 
   surveys: any[] = [];
   totalSurveys: number = 0;
+  loading:boolean=false;
 
 
   constructor(private apiService: ApiService) { }
 
   ngOnInit() {
+    this.loading=true;
     this.apiService.getAllSurveys().subscribe(data => {
+      this.loading=false;
       this.surveys = data.surveys;
       this.totalSurveys = data.total;
     });

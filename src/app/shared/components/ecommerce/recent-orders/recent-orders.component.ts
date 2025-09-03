@@ -47,6 +47,7 @@ interface Product {
 })
 export class RecentOrdersComponent implements OnInit {
   @Input() tableData: any[] = [];
+  loading:boolean=false;
 
   constructor(private router: Router) { }
 
@@ -65,6 +66,7 @@ export class RecentOrdersComponent implements OnInit {
 
   goToSurvey(suId: string) {
     this.router.navigate(['/profile'], { queryParams: { id: suId } });
+    this.loading=false;
   }
 
 }

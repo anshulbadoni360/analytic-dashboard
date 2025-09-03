@@ -16,9 +16,27 @@ export class ApiService {
     // private cookieService: CookieService,
   ) { }
 
-  getAllSurveys(pageNo: Number = 1, pageSize: Number = 10) {
-    return this.httpService.get(httpRoutes.getAllSurveys + `?page=${pageNo}&limit=${pageSize}`);
-  }
+  getAllSurveys(pageNo: number = 1, pageSize: number = 10) {
+    return this.httpService.get(httpRoutes.getAllSurveys + `?page=${pageNo}&limit=${pageSize}`).pipe(
+      map((res: any) => {
+        if (!res?.surveys) return res;
+
+        // filter duplicate surveys based on title (case insensitive)
+        const uniqueData = res.surveys.reduce((acc: any[], curr: any) => {
+          const title = curr?.title?.toLowerCase() || "";
+          const exists = acc.some((item: any) => item?.title?.toLowerCase() === title);
+
+          if (!exists) {
+            acc.push(curr);
+          }
+          return acc;
+        }, []);
+
+        return { ...res, surveys: uniqueData };
+      })
+    );
+}
+
   getSurvey(surveyId: string) {
     return this.httpService.get(httpRoutes.getSurvey + `/${surveyId}`);
   }
