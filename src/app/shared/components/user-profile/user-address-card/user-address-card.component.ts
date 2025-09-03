@@ -61,6 +61,4 @@ export class UserAddressCardComponent {
     console.log('Saving changes...');
     this.modal.closeModal();
   }
-
-
 }

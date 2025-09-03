@@ -30,8 +30,9 @@ export class BasicTableThreeComponent {
   surveys: any[] = []
   totalSurveys = 0
   currentPage = 1;
-  itemsPerPage = 5;
+  itemsPerPage = 10;
   pages: number = 0
+  loading: boolean=false;
 
   constructor(private apiService: ApiService, private router: Router) { }
   ngOnInit() {
@@ -39,7 +40,9 @@ export class BasicTableThreeComponent {
   }
 
   fetchData() {
+    this.loading = true;
     this.apiService.getAllSurveys(this.currentPage, this.itemsPerPage).subscribe(data => {
+      this.loading = false;
       this.surveys = data.surveys;
       this.totalSurveys = data.total;
       this.pages = data.pages
